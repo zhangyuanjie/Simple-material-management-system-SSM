@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.zyj.ssm.dao.SmalltypeMapper">
+	<!-- 查询所有数据 -->
+	<select id="selectAllSmalltype" resultType="smalltype">
+		select * from t_smalltype
+	</select>
+	
+	<select id="selectByBid" parameterType="Integer" resultType="smalltype">
+		select * from t_smalltype where bid=#{bid}
+	</select>
+	
+	<!-- 插入数据 -->
+	<insert id="insertSmalltype" parameterType="smalltype">
+		insert into t_smalltype values(null,#{name},#{bid},1)
+	</insert>
+	
+	
+	
+	<!-- 删除数据（实际开发中） -->
+	<delete id="deleteSmalltype" parameterType="Integer">
+		delete from t_smalltype where id=#{id}
+	</delete>
+	
+	<update id="updateSmalltype" parameterType="smalltype">
+		update t_smalltype set name=#{name},bid=#{bid} ,state=#{state}
+		where id=#{id}
+	</update>
+</mapper>

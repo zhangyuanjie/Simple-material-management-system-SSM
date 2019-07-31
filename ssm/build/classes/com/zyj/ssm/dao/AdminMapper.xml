@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.zyj.ssm.dao.AdminMapper">
+
+	<!-- 查询所有数据 -->
+	<select id="findAllAdmin" resultType="admin">
+		select * from t_admin
+	</select>
+	
+	<!-- 管理员登录 -->
+	<select id="selectOne" parameterType="admin" resultType="Admin">
+		select * from t_admin where name=#{name} and pwd=#{pwd}
+	</select>
+	
+	<select id="selectById" parameterType="Integer" resultType="admin">
+		select * from t_admin where id=#{id}
+	</select>
+	
+	<select id="selectByName" parameterType="String" resultType="admin">
+		select * from t_admin where name=#{name}
+	</select>
+	
+	<!-- 插入数据 -->
+	<insert id="insertAdmin" parameterType="admin">
+		insert into t_admin values(null,#{name},#{pwd},#{state},0,current_timestamp())
+	</insert>
+	
+	<!-- 删除数据（实际开发中） -->
+	<insert id="deleteAdmin" parameterType="Integer">
+		delete from t_admin where id=#{id}
+	</insert>
+	
+	<update id="updateAdmin" parameterType="admin">
+		update t_admin set pwd=#{pwd},state=#{state}
+		where id=#{id}
+	</update>
+	
+	<update id="updateFirstErrorLog" parameterType="String">
+		update t_admin set count=1,time=current_timestamp()
+		where name=#{name}
+	</update>
+	
+	<update id="updateState" parameterType="String">
+		update t_admin set state=-1,count=5,time=current_timestamp()
+		where name=#{name}
+	</update>
+	
+	<update id="updateErrorCount" parameterType="String">
+		update t_admin set count=count+1
+		where name=#{name}
+	</update>
+	
+	<update id="initLog" parameterType="String">
+		update t_admin set count=0,time=current_timestamp()
+		where name=#{name}
+	</update>
+	
+	<update id="updateErrorState" parameterType="String">
+		update t_admin set state=0
+		where name=#{name}
+	</update>
+	
+	
+</mapper>

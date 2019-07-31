@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.zyj.ssm.dao.ProductsMapper">
+	<!-- 查询所有数据 -->
+	<select id="selectAll" resultType="products">
+		select * from t_products order by createtime desc
+	</select>
+	
+	<select id="selectCount" resultType="Integer">
+		select count(*) from t_products 
+	</select>
+	
+	<select id="selectByName" resultType="products" parameterType="String">
+		select * from t_products where name like '%${value}%' order by createtime desc
+	</select>
+	
+	<select id="selectByKeyword" resultType="products" parameterType="products">
+		select * from t_products where 1=1 <if test="bid!=0">
+					and bid=#{bid}
+				</if><if test="sid!=0">
+					and sid=#{sid}
+				</if><if test="name!=null">
+					and name like '%${name}%'
+				</if>order by createtime desc
+	</select>
+	
+	<select id="selectById" parameterType="Integer" resultType="products">
+		select * from t_products where id=#{id}
+	</select>
+	
+	<update id="updateInCount" parameterType="products">
+		update t_products set count=count+#{count},createtime=current_timestamp() where id=#{id}
+	</update>
+	
+	<update id="updateOutCount" parameterType="products">
+		update t_products set count=count-#{count},createtime=current_timestamp() where id=#{id}
+	</update>
+
+	<!-- 插入数据，即新产品入库 -->
+	<insert id="insertProduct" parameterType="products">
+		insert into t_products values(null,#{name},#{bid},#{sid},#{units},#{count},
+			#{wvalue},#{state},current_timestamp())
+	</insert>
+	
+	<update id="updateProduct" parameterType="products">
+		update t_products set name=#{name},bid=#{bid},
+		sid=#{sid},units=#{units},count=#{count},wvalue=#{wvalue},state=#{state},createtime=current_timestamp()
+		where id=#{id}
+	</update>
+	
+	
+	
+	
+	<!-- 删除数据（实际开发中） -->
+	<insert id="deleteProduct" parameterType="Integer">
+		delete from t_products where id=#{id}
+	</insert>
+	
+	
+</mapper>

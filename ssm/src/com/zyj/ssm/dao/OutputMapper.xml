@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.zyj.ssm.dao.OutputMapper">
+	<!-- 查询所有数据 -->
+	<select id="selectAllOutput" resultType="output">
+		select * from t_output
+	</select>
+	
+	<!-- 插入数据 -->
+	<insert id="insertOutput" parameterType="output">
+		insert into t_output values(null,#{name},#{pcount},#{price},#{annt},current_timestamp())
+	</insert>
+	
+	<!-- 根据关键字查询 -->
+	<select id="selectOutputByKeyword" resultType="output" parameterType="proInOutput">
+		select * from t_output where 1=1
+			<if test="name!='' and name!=null">
+				and name=#{name}
+			</if>
+			<if test="startTime!='' and startTime!=null">
+			    <!-- and	inputtime&gt;=#{startTime} -->
+			    and DATE_FORMAT(outputtime, '%Y-%m-%d %T:%i:%s') >= DATE_FORMAT(#{startTime}, '%Y-%m-%d %T:%i:%s')
+			</if>
+			<if test="endTime!='' and endTime!=null">
+				<!-- and inputtime&lt;=#{endTime} -->
+				and DATE_FORMAT(#{endTime}, '%Y-%m-%d %T:%i:%s') >= DATE_FORMAT(outputtime, '%Y-%m-%d %T:%i:%s')
+			</if>
+			<if test="annt!='' and annt!=null">
+				and annt=#{annt}
+			</if>
+			<!-- <if test='pname!="0"'>
+				and pname=#{pname}
+			</if> -->
+	</select>
+	
+	<!-- 根据名字分组查询 -->
+	<select id="selectOutByName"  resultType="output">
+		select name,sum(pcount) pcount from t_output group by name desc
+	</select>
+	
+	<select id="findById" parameterType="Integer" resultType="output">
+		select * from t_output where oid=#{oid}
+	</select>
+	
+	<!-- 删除数据（实际开发中） -->
+	<insert id="deleteOutput" parameterType="Integer">
+		delete from t_output where oid=#{oid}
+	</insert>
+	
+	<insert id="updateOutput" parameterType="output">
+		update t_input set name=#{name},pcount=#{pcount},
+		price=#{price},annt=#{annt},outputtime=#{outputtime}
+		where oid=#{oid}
+	</insert>
+</mapper>

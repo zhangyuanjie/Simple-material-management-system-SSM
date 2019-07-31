@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>   
+
+	<!-- 设置别名 -->
+	<typeAliases>
+		<!-- <typeAlias alias="admin" type="com.zyj.ssm.pojo.Admin"/>
+		<typeAlias alias="bigtype" type="com.zyj.ssm.pojo.Bigtype"/>
+		<typeAlias alias="input" type="com.zyj.ssm.pojo.Input"/>
+		<typeAlias alias="output" type="com.zyj.ssm.pojo.Output"/>
+		<typeAlias alias="products" type="com.zyj.ssm.pojo.Products"/>
+		<typeAlias alias="provider" type="com.zyj.ssm.pojo.Provider"/>
+		<typeAlias alias="smalltype" type="com.zyj.ssm.pojo.Smalltype"/> -->
+		<package name="com.zyj.ssm.pojo"/>
+	</typeAliases>
+ 
+ 	<!-- 经过Spring与MyBatis整合后，以下配置可以删除 -->
+    <!--1.配置环境 ，默认的环境id为mysql
+    <environments default="mysql">
+    1.2.配置id为mysql的数据库环境 
+        <environment id="mysql">
+           使用JDBC的事务管理 
+            <transactionManager type="JDBC" />
+           数据源 
+            <dataSource type="POOLED">
+			  <property name="driver" value="com.mysql.jdbc.Driver" />
+			  <property name="url" 
+                            value="jdbc:mysql://localhost:3306/kucun" />
+			  <property name="username" value="root" />
+			  <property name="password" value="root" />
+            </dataSource>
+        </environment>
+    </environments> -->
+   
+    <!--2.配置Mapper的位置 -->
+    
+    <mappers>
+		<!-- <mapper resource="com/zyj/ssm/dao/AdminMapper.xml" /> -->
+		<package name="com.zyj.ssm.dao"/>
+    </mappers>
+    
+    
+</configuration>
